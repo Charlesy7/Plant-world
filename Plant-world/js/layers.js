@@ -67,11 +67,11 @@ addLayer("p", {
             },
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect    
             },
-            22: {
-                title: "Energetic Key III",
-                description: "Multiply basic key gain by 1.2",
-                cost: new Decimal(6750),    
-            },   
+        22: {
+            title: "Energetic Key III",
+            description: "Multiply basic key gain by 1.25",
+            cost: new Decimal(6750),    
+        },   
             
     },
 })
@@ -161,8 +161,8 @@ addLayer("m", {
     startData() { return {                  
         unlocked: true,                     
         points: new Decimal(0),
-        flameMagic: new Decimal(0),
-        earthMagic: new Decimal(0),
+        keyMana: new Decimal(0),
+        keyMana: new Decimal(0),
         magicTime: new Decimal(0)
         
     }},
@@ -191,11 +191,11 @@ addLayer("m", {
     },
     clickables: {
         11: {
-            canClick() {if(player.m.flameMagic.gte(150))return true},
+            canClick() {if(player.m.keyMana.gte(150))return true},
             display() {return "Fireball"},
             onClick() {
-                if(player.m.flameMagic.gte(150)) player.points = player.points.mul(1.05)
-                 player.m.flameMagic = player.m.flameMagic.sub(150)
+                if(player.m.keyMana.gte(150)) player.points = player.points.mul(1.05)
+                 player.m.keyMana = player.m.keyMana.sub(150)
             }
            
            
@@ -212,11 +212,11 @@ addLayer("m", {
         "clickables",
         "blank",
         ["display-text",
-            function() { return 'You have ' + format(player.m.flameMagic) + ' Flame Magic' },
+            function() { return 'You have ' + format(player.m.keyMana) + ' Flame Magic' },
             { "color": "darkorange", "font-size": "24px", "font-family": "Libre Baskerville" }],
         "blank", 
         ["display-text",
-        function() { return 'You have ' + format(player.m.earthMagic) + ' Earth Magic' },
+        function() { return 'You have ' + format(player.m.keyMana) + ' Earth Magic' },
         { "color": "brown", "font-size": "24px", "font-family": "Libre Baskerville" }],
         "blank",
         ["toggle", ["c", "beep"]],
@@ -227,12 +227,12 @@ addLayer("m", {
     ],
     update(diff) {
         if (hasMilestone ('l', 2)) {
-        flameMagicGain = new Decimal(0.1)
-        flameMagicGain = flameMagicGain.times(player.m.points)
-        player.m.flameMagic = player.m.flameMagic.add(flameMagicGain.times(diff));
-        earthMagicGain = new Decimal(0.02)
-        earthMagicGain = earthMagicGain.times(player.m.points)
-        player.m.earthMagic = player.m.earthMagic.add(earthMagicGain.times(diff));
+        keyManaGain = new Decimal(0.1)
+        keyManaGain = keyManaGain.times(player.m.points)
+        player.m.keyMana = player.m.keyMana.add(keyManaGain.times(diff));
+        keyManaGain = new Decimal(0.02)
+        keyManaGain = keyManaGain.times(player.m.points)
+        player.m.keyMana = player.m.keyMana.add(keyManaGain.times(diff));
     }
         if(player.m.magicTime.gt(0)) player.m.magicTime = player.m.magicTime.sub(diff).max(0)
 }          

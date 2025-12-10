@@ -43,18 +43,28 @@ function getPointGen() {
 		return new Decimal(0)
 
 	let gain = new Decimal(0.6)
-	if (hasUpgrade('p', 11)) gain = gain.times(3)
+	if (hasUpgrade('p', 11)) gain = gain.times(2)
 	if (hasUpgrade('p', 12)) gain = gain.times(upgradeEffect('p', 12))
 	if (hasUpgrade('p', 14)) gain = gain.times(1.5)
-	if (hasUpgrade('p', 22)) gain = gain.times(1.2)
-	if (hasUpgrade('l', 11)) gain = gain.times(2.5)
+	if (hasUpgrade('p', 22)) gain = gain.times(1.25)
+	if (hasUpgrade('l', 11)) gain = gain.times(2.02)
 	if (hasUpgrade('l', 12)) gain = gain.times(0.5)
 	if (hasUpgrade('l', 12)) gain = gain.times(upgradeEffect('l', 12))
 	if (hasMilestone('l', 1)) gain = gain.times(1.15)
 	if (inChallenge('l', 11)) gain = gain.times(0.1)
-	if (hasChallenge('l', 11)) gain = gain.pow(1.2)
-	if (hasUpgrade('h', 11)) gain = gain.times(4)
+	if (hasUpgrade('p', 23)) gain = gain.times(1.09)
+	if (hasChallenge('l', 11)) gain = gain.times(2)	
+	if (hasChallenge('l', 12)) gain = gain.times(1.6)	
+	if (hasMilestone('g', 1)) gain = gain.times(2)
+	if (inChallenge('l', 12)) gain = gain.div(upgradeEffect('l', 12))
+	if (hasUpgrade('p', 31)) gain = gain.times(upgradeEffect('p', 31))
+	if (hasMilestone('g', 3))
+		if (player.points.lte(22222)) gain = gain.times(10)
+		if (player.points.gte(666666)) gain = gain.times(2.5)
+    if (hasUpgrade('p', 33)) gain = gain.pow(1.01)
 	gain = gain.mul(player.m.magicMastery.pow(0.8).add(1))
+    gain = gain.mul(player.m.sparks.pow(0.3).add(1))
+
 	
     return gain
 }
